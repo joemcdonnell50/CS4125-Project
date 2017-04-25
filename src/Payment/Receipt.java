@@ -1,26 +1,22 @@
 package Payment;
 
-import DatabaseManager.CustomerManager;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Owner
  */
 public class Receipt {
-   private String UserName,hotel,roomType,nbOfGuests,dateArrival,NbOfNights,uniqueNumber;
+   private String UserName,hotel,roomType,nbOfGuests,dateArrival;
+   private int NbOfNights,uniqueNumber;
+   private double Total, servicePrice;
   //private LocalDate ye;
+
+    public double getTotal() {
+        return Total;
+    }
+
+    public void setTotal(double Total) {
+        this.Total = Total;
+    }
        
         public String getUsername(){
             return UserName;
@@ -52,49 +48,43 @@ public class Receipt {
         public void setDateArrival(String dateArrival){
             this.dateArrival = dateArrival;
         }
-         public String getNbOfNights(){
+         public int getNbOfNights(){
             return NbOfNights;
         }
-        public void setNbOfNights(String NbOfNights){
+        public void setNbOfNights(int NbOfNights){
             this.NbOfNights = NbOfNights;
         }
-         public String getUniqueNumber(){
+         public int getUniqueNumber(){
             return uniqueNumber;
         }
-        public void setUniqueNumber(String uniqueNumber){
+        public void setUniqueNumber(int uniqueNumber){
             this.uniqueNumber = uniqueNumber;
         }
         
-        public void getReciept(){
-        CustomerManager customermanager = new CustomerManager();
-        Bill bill = new Bill();
-         ArrayList<String> Reservations = new ArrayList<>();
-         Reservations = customermanager.getReservation();
-        int Lastline = Reservations.size()-2;
-        String[] CardDets = Reservations.get(Lastline).split(",");
-        setUsername(CardDets[0]);
-        setHotel(CardDets[1]);
-        setRoomType(CardDets[2]);
-        setNbOfGuests(CardDets[3]);
-        setDateArrival(CardDets[4]);
-        setNbOfNights(CardDets[5]);
-        setUniqueNumber(CardDets[6]);
-        double total=bill.calculateCost(CardDets[1],CardDets[2],CardDets[3],CardDets[4],Integer.parseInt(CardDets[5]),Integer.parseInt(CardDets[6]));
-        FormatReceipt(total);
-        }  
-        public void FormatReceipt(double total){
-            
-            
-            String Receipt = ("Hello " + getUsername() + "\n" +
-                               "This is your receipt for reservation number " + getUniqueNumber() +"\n" 
-                              + "Hotel : " + getHotel() + "\n" + 
-                                "Roomtype : "+ getRoomType() + "\n" +
-                                "Number of Guests : " + getNbOfGuests() + "\n" +
-                                "Date of Arrival : " + getDateArrival() + "\n" +
-                                "Number of Nights : " + getNbOfNights() + "\n" +  
-                                "Your total cost is " + total
-                    );
-            System.out.println(Receipt);
-            
+        public void setServicePrice(double servicePrice){
+            this.servicePrice = servicePrice;
         }
+        public double getServicePrice(){
+            return servicePrice;
+        }
+        
+        
+        
+        public String FormatReceipt(){  
+            
+            String Receipt = String.format("Hello " + getUsername() + "\n" +
+                               "Receipt for reservation number " + getUniqueNumber() +"\n" 
+                               + "Hotel : " +"\t"+ getHotel() + "\n" + 
+                                "Roomtype : "+"\t"+ getRoomType() + "\n" +
+                                "Number of Guests : "+"\t" + getNbOfGuests() + "\n" +
+                                "Date of Arrival : " +"\t"+ getDateArrival() + "\n" +
+                                "Number of Nights : " +"\t"+ getNbOfNights() + "\n" +  
+                                "Cost of Services :" + "\t" + getServicePrice() + "\n" +
+                                "Your total cost is "+"\t" + Total
+                    );
+            
+            return Receipt;
+        }
+
+    
 }
