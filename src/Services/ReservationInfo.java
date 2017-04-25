@@ -12,12 +12,16 @@ import java.time.LocalDate;
  * @author bprieto
  */
 public class ReservationInfo {
+    //Factory method for ReservationInfo
+    public static ReservationInfo create(LocalDate checkIn, LocalDate checkOut, int uniqueReservationCode) {
+        return new ReservationInfo(checkIn, checkOut, uniqueReservationCode);
+    }
     
     LocalDate checkIn;
     LocalDate checkOut;
     int uniqueReservationCode;
 
-    public ReservationInfo(LocalDate checkIn, LocalDate checkOut, int uniqueReservationCode) {
+    private ReservationInfo(LocalDate checkIn, LocalDate checkOut, int uniqueReservationCode) {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.uniqueReservationCode = uniqueReservationCode;
