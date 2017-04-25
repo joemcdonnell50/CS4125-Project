@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+import Customer.Customer;
+
 
 /**
  *
@@ -10,24 +8,27 @@
  */
 public class CustomerModel {
     
+    private Customer customer= new Customer("salut","salut");
+
+    private int uniqueReservationNumber;
+
+    public int getUniqueReservationNumber() {
+        return uniqueReservationNumber;
+    }
+
+    public void setUniqueReservationNumber(int uniqueReservationNumber) {
+        this.uniqueReservationNumber = uniqueReservationNumber;
+    }
+
+
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
     
-    private String username;
-    private String password;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
 }
