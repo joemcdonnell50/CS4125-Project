@@ -10,13 +10,17 @@ package Services;
  * @author bprieto
  */
 public class Service {
+    //Factory method for Service
+    public static Service create() {
+        return new Service();
+    }
 
     private boolean isWifi=false;
     private boolean isSauna=false;
     private boolean isHammam=false;
     private boolean isPool=false;
 
-    public Service() {
+    private Service() {
     }
 
     public boolean isIsWifi() {
