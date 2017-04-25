@@ -6,7 +6,6 @@
 package Payment;
 import javax.xml.bind.DatatypeConverter;
 import java.io.*;
-import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,14 +14,20 @@ import java.util.logging.Logger;
  * @author Owner
  */
 public class CreditCardPay {
+    //Factory method one for CreditCardPay
+    public static CreditCardPay create() {
+        return new CreditCardPay();
+    }
+    //Factory method two for CreditCardPay
+    public static CreditCardPay create(String NameOnCard, String expiryDate, String creditCardNum, String CVNum) {
+        return new CreditCardPay(NameOnCard, expiryDate, creditCardNum, CVNum);
+    }
 
 
         private String NameOnCard;
 	private String creditCardNum;
-        private String EncryptcreditCardNum;
         private String expiryDate;
         private String CVNum;
-        private String EncryptCVNum;
 	
 	public CreditCardPay(){
 		this.NameOnCard="No card name";
@@ -32,7 +37,7 @@ public class CreditCardPay {
 	}
 
 
-	public CreditCardPay(String NameOnCard, String expiryDate, String creditCardNum,String CVNum){
+	private CreditCardPay(String NameOnCard, String expiryDate, String creditCardNum,String CVNum){
 		this.NameOnCard=NameOnCard;
 		this.expiryDate=expiryDate;
 		this.creditCardNum=creditCardNum;
@@ -57,37 +62,7 @@ public class CreditCardPay {
         public String getCardName(){
 		return NameOnCard;	
 	}
-       /* public void getCardDetails(){
-              ArrayList<String> CardDetails = new ArrayList<String>();
-            FileReader readFile = null;
-            BufferedReader buffer = null;
-        try {
-            readFile = new FileReader("filesRequired/CardDetails.csv");
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        buffer = new BufferedReader(readFile);
-        String line = null;
-        while (true) {
-            try {
-                line = buffer.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (line == null) {
-                break;
-            }
-           CardDetails.add(line);
-        }
-        int Lastline = CardDetails.size()-1;
-        String[] CardDets = CardDetails.get(Lastline).split(",");
-        setcardName(CardDets[0]);
-        setexpireDate(CardDets[1]);
-        setcreditCardNum(CardDets[2]);
-        setCVNum(CardDets[3]);
-        
-        }*/
+      
          public String encryptCard(String StringtoEncrpyt){
             try {
              byte[] EncodedString = StringtoEncrpyt.getBytes("UTF-8");
@@ -110,8 +85,8 @@ public class CreditCardPay {
                 Logger.getLogger(CreditCardPay.class.getName()).log(Level.SEVERE, null, ex);
             }
             return "Not decrypted";
-}
-        
+        }
+        //Checks if credit card supplied has a legitimate card number
         public boolean isCardLegit(){
             int lastDidgit = 0,modofnum = 0, totalOfNumbers =0, tempDidgit = 0;
             int length = creditCardNum.length();
@@ -126,7 +101,7 @@ public class CreditCardPay {
           for(int j = 1;j<length-1;j+=2){
              tempDidgit = CardNum[j];
              tempDidgit = tempDidgit *2;
-                if(tempDidgit > 9){
+                if(tempDidgit > 10){
                 tempDidgit = tempDidgit - 9;
              }
                 totalOfNumbers += tempDidgit;
@@ -135,9 +110,11 @@ public class CreditCardPay {
              modofnum = totalOfNumbers % 10;
           if(modofnum != lastDidgit){
               return false;
+              
           }
           else{
         return true;
+        
         }
-        }
+    }
 }
