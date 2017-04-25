@@ -11,13 +11,17 @@ import java.util.ArrayList;
  *
  * @author bprieto
  */
-public class Hotel {
+public class Hotel implements RoomDAOImpl {
+    //Factory method for Hotel
+    public static Hotel create(String location, Service service) {
+        return new Hotel(location, service);
+    }
     
     private String location;
     private ArrayList <Room> rooms=new ArrayList<Room>();
     Service service;
 
-    public Hotel(String location, Service service) {
+    private Hotel(String location, Service service) {
         this.location = location;
         this.service = service;
     }
@@ -31,7 +35,7 @@ public class Hotel {
     }
 
     public ArrayList<Room> getRooms() {
-        return rooms;
+        return this.rooms;
     }
 
     public void setRooms(ArrayList<Room> rooms) {
@@ -45,6 +49,16 @@ public class Hotel {
     public void setService(Service service) {
         this.service = service;
     }
+
+    @Override
+    public Room getRoom(int index) {
+        return this.rooms.get(index);
+    }
+
+    @Override
+    public void deleteRoom(Room room) {
+        this.rooms.remove(room);
+       }
     
 
     
