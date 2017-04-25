@@ -5,140 +5,106 @@
  */
 package Reservation;
 
-import DatabaseManager.CustomerManager;
-import Services.Hotel;
-import Services.Room;
-import java.util.ArrayList;
-import Reservation.Reservation;
-import Services.ReservationInfo;
 import java.time.LocalDate;
 
 /**
  *
  * @author bprieto
  */
-public class ReservationSystem {
-
-    private ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-    private ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-    CustomerManager dataManager=new CustomerManager();
-
-    public ReservationSystem() {
+public class Reservation {
+    //Factory method for Reservation
+    public static Reservation create(int uniqueReservationCode, String reservationName, LocalDate checkInDate, LocalDate checkOutDate) {
+        return new Reservation(uniqueReservationCode, reservationName, checkInDate, checkOutDate);
     }
-    private static ReservationSystem INSTANCE = new ReservationSystem();
+    
+    private int uniqueReservationCode;
+    private String username;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+    private double totalCost=0;
+    private int numberOfRooms;
+    private String reservationType;
+    private boolean havePaid;
 
-    public static ReservationSystem getInstance() {
-        return INSTANCE;
-    }
-
-    public ArrayList<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(ArrayList<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-
-    public ArrayList<Hotel> getHotels() {
-        return hotels;
+    private Reservation(int uniqueReservationCode, String reservationName, LocalDate checkInDate, LocalDate checkOutDate) {
+        this.uniqueReservationCode = uniqueReservationCode;
+        this.username = reservationName;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+       // this.havePaid = havePaid;
     }
 
-    public void setHotels(ArrayList<Hotel> hotels) {
-        this.hotels = hotels;
+    public int getUniqueReservationCode() {
+        return uniqueReservationCode;
     }
 
-    public void makeReservation(String username, LocalDate checkIn, LocalDate checkOut, String location, String roomType,String nbGuests,int random) {
-        
-        // we have to check if random not already use
-        this.getReservations().add(new Reservation(random, username, checkIn, checkOut));
-        int i = 0;
-        int indexHotel = 0;
-        for (Hotel h : this.hotels) {
-            if (h.getLocation().equals(location)) {
-                indexHotel = i;
-                break;
-            }
-            i++;
-
-        }
-        boolean available = true;
-
-        for (Room r : this.hotels.get(indexHotel).getRooms()) {
-            
-
-            if (r.getType().equals(roomType)) {
-                available = true;
-
-                for (ReservationInfo rInfo : r.getResInfo()) {
-                    if ((checkIn.isBefore(rInfo.getCheckOut()) && checkOut.isAfter(rInfo.getCheckIn())) || (checkOut.isAfter(rInfo.getCheckOut()) && checkIn.isBefore(rInfo.getCheckOut())) || (checkIn.isAfter(rInfo.getCheckIn()) && checkOut.isBefore(rInfo.getCheckOut()))) {
-                        available = false;
-                    }
-
-                }
-                if (available == true) {
-                    r.getResInfo().add(new ReservationInfo(checkIn, checkOut, random));
-                    break;
-                    
-                }
-
-            }
-
-        }
-        
-
+    public void setUniqueReservationCode(int uniqueReservationCode) {
+        this.uniqueReservationCode = uniqueReservationCode;
     }
 
-    public void displayAllRooms() {
-        for (Hotel h : this.hotels) {
-            for (Room r : h.getRooms()) {
-                System.out.println(r.getType());
-                for (ReservationInfo rInfo : r.getResInfo()) {
-                    System.out.println(rInfo.getUniqueReservationCode());
-                }
-            }
-
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-        }
+    public String getReservationName() {
+        return username;
     }
 
-    public void displayAllReservations() {
-        for (Reservation r : this.getReservations()) {
-            System.out.println(r.getUniqueReservationCode());
-        }
+    public void setReservationName(String reservationName) {
+        this.username = reservationName;
     }
 
-    public boolean testRoom(String location, String roomType, LocalDate checkIn, LocalDate checkOut) {
-        int i = 0;
-        int indexHotel = 0;
-        for (Hotel h : this.hotels) {
-            if (h.getLocation().equals(location)) {
-                indexHotel = i;
-                break;
-            }
-            i++;
 
-        }
-        boolean available = true;
-        for (Room r : this.hotels.get(indexHotel).getRooms()) {
-            available = true;
-            if (r.getType().equals(roomType)) {
-                for (ReservationInfo rInfo : r.getResInfo()) {
-                    if ((checkIn.isBefore(rInfo.getCheckOut()) && checkOut.isAfter(rInfo.getCheckIn())) || (checkOut.isAfter(rInfo.getCheckOut()) && checkIn.isBefore(rInfo.getCheckOut())) || (checkIn.isAfter(rInfo.getCheckIn()) && checkOut.isBefore(rInfo.getCheckOut()))) {
-                        available = false;
-                    }
+    public String getUsername() {
+        return username;
+    }
 
-                }
-                if (available == true) {
-                    return true;
-                }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-            }
+    public LocalDate getCheckInDate() {
+        return checkInDate;
+    }
 
-        }
-        return false;
+    public void setCheckInDate(LocalDate checkInDate) {
+        this.checkInDate = checkInDate;
+    }
 
+    public LocalDate getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(LocalDate checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public int getNumberOfRooms() {
+        return numberOfRooms;
+    }
+
+    public void setNumberOfRooms(int numberOfRooms) {
+        this.numberOfRooms = numberOfRooms;
+    }
+
+    public String getReservationType() {
+        return reservationType;
+    }
+
+    public void setReservationType(String reservationType) {
+        this.reservationType = reservationType;
+    }
+
+    public boolean isHavePaid() {
+        return havePaid;
+    }
+
+    public void setHavePaid(boolean havePaid) {
+        this.havePaid = havePaid;
     }
 
 }
