@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Customer;
 
 /**
@@ -10,13 +5,24 @@ package Customer;
  * @author bprieto
  */
 public class Customer {
+    //Factory method for Customer
+    public static Customer create(String username, String password) {
+        return new Customer(username, password);
+    }
     private String username;
     private String password;
+    private State state;
 
     public Customer(String username, String password) {
         this.username = username;
         this.password = password;
     }
+    public void setState(State state){
+      this.state = state;		
+   }
+    public State getState(){
+      return state;
+   }
 
     public String getUsername() {
         return username;
