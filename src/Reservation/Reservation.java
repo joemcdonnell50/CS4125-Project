@@ -12,6 +12,10 @@ import java.time.LocalDate;
  * @author bprieto
  */
 public class Reservation {
+    //Factory method for Reservation
+    public static Reservation create(int uniqueReservationCode, String reservationName, LocalDate checkInDate, LocalDate checkOutDate) {
+        return new Reservation(uniqueReservationCode, reservationName, checkInDate, checkOutDate);
+    }
     
     private int uniqueReservationCode;
     private String username;
@@ -22,7 +26,7 @@ public class Reservation {
     private String reservationType;
     private boolean havePaid;
 
-    public Reservation(int uniqueReservationCode, String reservationName, LocalDate checkInDate, LocalDate checkOutDate) {
+    private Reservation(int uniqueReservationCode, String reservationName, LocalDate checkInDate, LocalDate checkOutDate) {
         this.uniqueReservationCode = uniqueReservationCode;
         this.username = reservationName;
         this.checkInDate = checkInDate;
@@ -70,10 +74,6 @@ public class Reservation {
     public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
-
-   
-
-  
 
     public double getTotalCost() {
         return totalCost;
