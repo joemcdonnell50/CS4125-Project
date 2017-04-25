@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Services;
 
 import java.util.ArrayList;
@@ -12,14 +7,17 @@ import java.util.ArrayList;
  * @author bprieto
  */
 public class Room {
+    //Factory method for Room 
+    public static Room create(String type, int maxOccupancy, double pricePerNight) {
+        return new Room(type, maxOccupancy, pricePerNight);
+    }
     
     private String type;
     private int maxOccupancy;
-    private boolean isCleaned=true;
     private double pricePerNight;
     private ArrayList<ReservationInfo> resInfo = new ArrayList<ReservationInfo>();
 
-    public Room(String type, int maxOccupancy, double pricePerNight) {
+    private Room(String type, int maxOccupancy, double pricePerNight) {
         this.type = type;
         this.maxOccupancy = maxOccupancy;
         this.pricePerNight = pricePerNight;
@@ -48,14 +46,6 @@ public class Room {
 
     public void setMaxOccupancy(int maxOccupancy) {
         this.maxOccupancy = maxOccupancy;
-    }
-
-    public boolean isIsCleaned() {
-        return isCleaned;
-    }
-
-    public void setIsCleaned(boolean isCleaned) {
-        this.isCleaned = isCleaned;
     }
 
     public double getPricePerNight() {
